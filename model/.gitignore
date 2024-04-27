@@ -1,0 +1,8 @@
+*
+
+# Miscellaneous.
+!.gitignore
+!pyproject.toml
+
+# Source code.
+!main.py

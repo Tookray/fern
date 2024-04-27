@@ -10,6 +10,7 @@ DATA_PATH = "data.csv"
 
 CAPACITY = 100
 K_P = 2
+K_I = 0.1
 TIME = 100
 
 
@@ -58,17 +59,23 @@ class Queue:
 
 class Controller:
     k_p: float
+    k_i: float
 
-    def __init__(self, k_p: float):
+    error = 0
+
+    def __init__(self, k_p: float, k_i: float):
         self.k_p = k_p
+        self.k_i = k_i
 
     def u(self, e: float) -> float:
-        return self.k_p * e
+        self.error += e
+
+        return self.k_p * e + self.k_i * self.error
 
 
 def simulate():
     p = Queue(CAPACITY)
-    c = Controller(K_P)
+    c = Controller(K_P, K_I)
 
     with open(DATA_PATH, "w") as file:
         csv_writer = writer(file)
